@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "175962361866",
+    "project_id": "yallafit",
+    "storage_bucket": "yallafit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175962361866:android:263477cebb6e0111e50ff3",
+        "android_client_info": {
+          "package_name": "com.yalafit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "175962361866-pk8n8hsvs89gtift2hfsor60hpe622v4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yalafit",
+            "certificate_hash": "ebe73cae3f093ecb7435191c9ae09579db56ab9b"
+          }
+        },
+        {
+          "client_id": "175962361866-tlbfaak19gsbrumdov2eto7360juu1gr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvMNlGBonvmrpscyHKgnXEpFTzUpT7bSs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "175962361866-tlbfaak19gsbrumdov2eto7360juu1gr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
