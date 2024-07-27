@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import colors from '../../config/color.json';
 import {
   HEIGHT,
@@ -58,10 +65,9 @@ const CurrentWeightScreen = ({
     setSelectState('Female');
   };
 
-
   return (
-    <ScrollView style={{ paddingHorizontal: HEIGHT(2) }}>
-
+    <ScrollView
+      style={{paddingHorizontal: HEIGHT(2), marginBottom: HEIGHT(12)}}>
       {/* Current Weight */}
 
       <Text style={styles.heading}>{currentWeightData[0].question_title}</Text>
@@ -71,8 +77,8 @@ const CurrentWeightScreen = ({
           style={styles.forInput}
           value={inputforWeight}
           onChangeText={onChangeforWeight}
-          
-        />
+
+/>
         <View style={styles.text}>
           <Text style={styles.forKG}>Kg's</Text>
         </View>
@@ -220,7 +226,7 @@ const styles = StyleSheet.create({
   select: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: WIDTH(45),
+    width: WIDTH(43),
     height: HEIGHT(6),
     borderWidth: 2,
     borderRadius: 9,

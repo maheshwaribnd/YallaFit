@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 9,
+    gap: 7,
   },
 
   forMaleFemale: {
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
   select: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: WIDTH(45),
+    width: WIDTH(44),
     height: HEIGHT(6),
     borderWidth: 2,
     borderRadius: 9,
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
   selectClrChange: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: WIDTH(45),
+    width: WIDTH(44),
     height: HEIGHT(6),
     borderWidth: 2,
     borderRadius: 9,

@@ -130,14 +130,13 @@ const SignUpDetails = () => {
           const userIdValue = JSON.stringify(res?.data?.userId);
           AsyncStorage.setItem('userid', userIdValue);
 
-          AsyncStorage.setItem('userData', JSON.stringify(userData));
+          AsyncStorage.setItem('userData', JSON.stringify(res?.data));
           if (userData?.question_status == true) {
             navigation.navigate('Dashboard');
           } else {
             navigation.navigate('LocationScreens');
           }
 
-          navigation.navigate('LocationScreens');
           signOut();
         } else {
           signOut();
@@ -333,7 +332,7 @@ const SignUpDetails = () => {
     ApiManager.userCompleteRegister(body)
       .then(async resp => {
         const data = resp?.data;
-        console.log('signUp', data);
+        console.log('signUp', data?.user);
         if (data?.status == 200) {
           await AsyncStorage.setItem('userData', JSON.stringify(data?.user));
           await AsyncStorage.setItem('userid', JSON.stringify(data?.user?.id));
