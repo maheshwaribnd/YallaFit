@@ -161,7 +161,12 @@ const NewEmail = () => {
         ) : null}
 
         <TouchableOpacity onPress={() => ResetPassword()} style={styles.button}>
-          <Text style={{fontFamily: NotoSans_Bold, fontSize: 16}}>
+          <Text
+            style={{
+              fontFamily: NotoSans_Bold,
+              color: colors.ButtonNameColor,
+              fontSize: 16,
+            }}>
             Reset Password
           </Text>
         </TouchableOpacity>

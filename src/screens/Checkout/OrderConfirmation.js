@@ -603,7 +603,7 @@ const OrderConfirmation = () => {
               fontSize: FONTSIZE(1.7),
               color: colors.Black,
             }}>
-            Total includes subscription + delivery charges
+            Total Amount
           </Text>
           <View
             style={{
