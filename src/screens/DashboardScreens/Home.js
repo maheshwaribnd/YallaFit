@@ -17,7 +17,7 @@ import {
 } from 'react-native-reanimated';
 import colors from '../../config/color.json';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FONTSIZE,
   HEIGHT,
@@ -25,22 +25,22 @@ import {
   NotoSans_Medium,
   WIDTH,
 } from '../../config/AppConst';
-import {useFocusEffect, useNavigation} from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import ApiManager from '../../API/Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useDispatch} from 'react-redux';
-import {userInfoDetails} from '../../Redux/Reducers/userInfo';
+import { useDispatch } from 'react-redux';
+import { userInfoDetails } from '../../Redux/Reducers/userInfo';
 import PieChart from 'react-native-pie-chart';
-import {ActivityIndicator, Badge} from 'react-native-paper';
-import {Circle, Svg} from 'react-native-svg';
-import {createAnimatableComponent} from 'react-native-animatable';
-import {ProgressBar} from '@react-native-community/progress-bar-android';
+import { ActivityIndicator, Badge } from 'react-native-paper';
+import { Circle, Svg } from 'react-native-svg';
+import { createAnimatableComponent } from 'react-native-animatable';
+import { ProgressBar } from '@react-native-community/progress-bar-android';
 
 const Home = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const AnimatedCircle = Animated.createAnimatedComponent(Circle);
-  const AnimatedText = Animated.createAnimatedComponent(TextInput);
+  const AnimatedCircle = Animated.createAnimatedComponent(Circle)
+  const AnimatedText = Animated.createAnimatedComponent(TextInput)
 
   const [progress, setProgress] = useState(0);
   const [notificationCount, setNotificationCount] = useState('');
@@ -53,43 +53,43 @@ const Home = () => {
     userresponse?.protein,
   ];
 
-  const sliceColor = ['#F0DE3E', '#F55F5F', '#00973C'];
+  const sliceColor = ['#F0DE3E', '#F55F5F', '#00973C']
 
   const radius = 45;
   const circumference = radius * Math.PI * 2;
   const duration = 6000;
 
-  const strokeOffset = useSharedValue(circumference);
+  const strokeOffset = useSharedValue(circumference)
 
   const percentage = useDerivedValue(() => {
     const number = ((circumference - strokeOffset.value) / circumference) * 100;
-    return withTiming(number, {duration: duration});
-  });
+    return withTiming(number, { duration: duration })
+  })
 
   const strokeColor = useDerivedValue(() => {
     return interpolateColor(
       percentage.value,
       [0, 50, 100],
-      ['red', 'green', 'yellow'],
-    );
-  });
+      ['red', 'green', 'yellow']
+    )
+  })
 
   const animatedCircleProps = useAnimatedProps(() => {
     return {
-      strokeDashoffset: withTiming(strokeOffset.value, {duration: duration}),
-      stroke: strokeColor.value,
-    };
-  });
+      strokeDashoffset: withTiming(strokeOffset.value, { duration: duration }),
+      stroke: strokeColor.value
+    }
+  })
 
   const animatedTextProps = useAnimatedProps(() => {
     return {
-      text: `${Math.round(percentage.value)} %`,
-    };
-  });
+      text: `${Math.round(percentage.value)} %`
+    }
+  })
 
   useEffect(() => {
-    strokeOffset.value = 0;
-  }, []);
+    strokeOffset.value = 0
+  }, [])
 
   // For Progressbar
 
@@ -101,11 +101,11 @@ const Home = () => {
   useEffect(() => {
     function updateProgress() {
       setProgress(currentProgress => {
-        if (currentProgress < 1) {
+        const newProgress = currentProgress + 0.01;
+        if (newProgress < 1) {
           setTimeout(updateProgress, 50);
         }
-
-        return currentProgress + 0.01;
+        return Math.min(newProgress, 1);
       });
     }
 
@@ -131,7 +131,7 @@ const Home = () => {
 
   const dashboardAPI = async () => {
     const userId = await AsyncStorage.getItem('userid');
-    const userIdd = JSON.parse(userId);
+    const userIdd = JSON.parse(userId)
     setLoader(true);
     await ApiManager.userDetails(userIdd)
       .then(res => {
@@ -140,7 +140,7 @@ const Home = () => {
           let response = res?.data?.respone;
           setUserResponse(response[0]);
           let findData = response.find(e => e);
-          dispatch(userInfoDetails({data: findData}));
+          dispatch(userInfoDetails({ data: findData }));
         }
       })
       .catch(error => {
@@ -156,7 +156,7 @@ const Home = () => {
 
   const NotificationAPI = async () => {
     const userId = await AsyncStorage.getItem('userid');
-    const userIdd = JSON.parse(userId);
+    const userIdd = JSON.parse(userId)
 
     await ApiManager.notification(userIdd)
       .then(res => {
@@ -183,11 +183,11 @@ const Home = () => {
               source={
                 userresponse?.length == []
                   ? require('../../Images/Profile/user.png')
-                  : {uri: userresponse?.profileImg}
+                  : { uri: userresponse?.profileImg }
               }
             />
           </TouchableOpacity>
-          <View style={{paddingHorizontal: 10}}>
+          <View style={{ paddingHorizontal: 10 }}>
             <Text style={styles.nameText}>{userresponse?.name}</Text>
             <Text>{userresponse?.city}</Text>
           </View>
@@ -196,8 +196,8 @@ const Home = () => {
           onPress={() => navigation.navigate('notification')}
           style={styles.iconNotication}>
           <Ionicons name="notifications-outline" size={27} color={'black'} />
-          <View style={{position: 'absolute', top: 5, right: 5}}>
-            <Badge size={15} style={{color: colors.White}}>
+          <View style={{ position: 'absolute', top: 5, right: 5 }}>
+            <Badge size={15} style={{ color: colors.White }}>
               {notificationCount}
             </Badge>
           </View>
@@ -208,12 +208,12 @@ const Home = () => {
         <ActivityIndicator
           size={45}
           color={colors.Black}
-          style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
         />
       ) : (
         <ScrollView showsVerticalScrollIndicator={false}>
           <Text style={styles.forBMIText}>Your BMI Result</Text>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             {/* <AnimatedText style={{ color: 'yellow', position: 'absolute', top: 25 }} animatedProps={animatedTextProps} />
             <Svg style={styles.caloryView}>
 
@@ -236,7 +236,6 @@ const Home = () => {
 
               />
             </Svg> */}
-
             <View style={styles.caloryView}>
               <PieChart
                 widthAndHeight={widthAndHeight}
@@ -244,13 +243,11 @@ const Home = () => {
                 sliceColor={sliceColor}
                 coverRadius={0.87}
                 labelPosition="inside"
-                style={{shadowOffset: {height: 2, width: 2}, elevation: 5}}
+                style={{ shadowOffset: { height: 2, width: 2 }, elevation: 5 }}
               />
 
               <View style={styles.caloriesPerDayText}>
-                <Text style={styles.caloryText}>
-                  {userresponse?.caloriesPerDay}
-                </Text>
+                <Text style={styles.caloryText}>{userresponse?.caloriesPerDay}</Text>
                 <Text style={styles.calorySubText}>Calories a day</Text>
               </View>
             </View>
@@ -258,7 +255,7 @@ const Home = () => {
           <Text style={styles.forStatisticsText}>
             This statistics are based on data you provided
           </Text>
-          <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <View style={styles.progressView}>
               <View>
                 <Text style={styles.text}>Protein</Text>
@@ -272,7 +269,7 @@ const Home = () => {
                   />
                   <Text style={styles.progressbarText}>
                     {/* {userresponse?.protein}g */}
-                    {Math.round(progress*userresponse?.protein)}g
+                    {Math.round(progress * userresponse?.protein)}g
                   </Text>
                 </View>
                 <Text style={styles.text}>Carbs</Text>
@@ -286,7 +283,7 @@ const Home = () => {
                   />
                   <Text style={styles.progressbarText}>
                     {/* {userresponse?.carbs}g */}
-                    {Math.round(progress*userresponse?.carbs)}g
+                    {Math.round(progress * userresponse?.carbs)}g
                   </Text>
                 </View>
                 <Text style={styles.text}>Fats</Text>
@@ -299,8 +296,7 @@ const Home = () => {
                     style={styles.progresssty3}
                   />
                   <Text style={styles.progressbarText}>
-                  {Math.round(progress*userresponse?.fats)}g
-
+                    {Math.round(progress * userresponse?.fats)}g
                     {/* {userresponse?.fats}g */}
                   </Text>
                 </View>
@@ -308,7 +304,7 @@ const Home = () => {
 
               <View style={styles.weightHeightBox}>
                 <Text style={styles.textWrap}>
-                  Male: {userresponse?.age} years
+                  {userresponse?.gender}: {userresponse?.age} yrs
                 </Text>
                 <Text style={styles.textWrap}>
                   Weight: {userresponse?.weight} kg
@@ -355,7 +351,7 @@ const styles = StyleSheet.create({
     width: WIDTH(100),
     height: HEIGHT(10),
     shadowColor: colors.Gray9,
-    shadowOffset: {width: 3, height: 6},
+    shadowOffset: { width: 3, height: 6 },
     shadowOpacity: 0.4,
     shadowRadius: 16,
     elevation: 7,
@@ -400,9 +396,9 @@ const styles = StyleSheet.create({
     paddingLeft: WIDTH(4),
     textShadowOffset: {
       height: 1,
-      width: 1,
+      width: 1
     },
-    textShadowRadius: 4,
+    textShadowRadius: 4
   },
 
   forStatisticsText: {
@@ -414,9 +410,9 @@ const styles = StyleSheet.create({
     paddingLeft: WIDTH(5),
     textShadowOffset: {
       height: 1,
-      width: 1,
+      width: 1
     },
-    textShadowRadius: 4,
+    textShadowRadius: 4
   },
 
   caloryView: {
@@ -430,9 +426,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFD9D9',
     ShadowOffset: {
       height: 1,
-      width: 1,
+      width: 1
     },
-    elevation: 5,
+    elevation: 5
   },
 
   caloriesPerDayText: {
@@ -447,9 +443,9 @@ const styles = StyleSheet.create({
     fontSize: FONTSIZE(3),
     textShadowOffset: {
       height: 1,
-      width: 1,
+      width: 1
     },
-    textShadowRadius: 4,
+    textShadowRadius: 4
   },
 
   calorySubText: {
@@ -457,9 +453,9 @@ const styles = StyleSheet.create({
     fontFamily: NotoSans_Bold,
     textShadowOffset: {
       height: 1,
-      width: 1,
+      width: 1
     },
-    textShadowRadius: 4,
+    textShadowRadius: 4
   },
 
   progressView: {
@@ -468,7 +464,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     shadowOffset: {
       height: 2,
-      width: 2,
+      width: 2
     },
     elevation: 5,
     backgroundColor: colors.White,
@@ -481,9 +477,9 @@ const styles = StyleSheet.create({
     color: colors.Black,
     textShadowOffset: {
       height: 1,
-      width: 1,
+      width: 1
     },
-    textShadowRadius: 4,
+    textShadowRadius: 4
   },
 
   progressInnerView: {
@@ -497,9 +493,9 @@ const styles = StyleSheet.create({
     fontFamily: NotoSans_Medium,
     textShadowOffset: {
       height: 1,
-      width: 1,
+      width: 1
     },
-    textShadowRadius: 4,
+    textShadowRadius: 4
   },
 
   progresssty1: {
@@ -509,9 +505,9 @@ const styles = StyleSheet.create({
     // backgroundColor: '#00973C',
     shadowOffset: {
       height: 2,
-      width: 2,
+      width: 2
     },
-    elevation: 6,
+    elevation: 6
   },
 
   progresssty2: {
@@ -521,9 +517,9 @@ const styles = StyleSheet.create({
     // backgroundColor: '#F55F5F',
     shadowOffset: {
       height: 2,
-      width: 2,
+      width: 2
     },
-    elevation: 6,
+    elevation: 6
   },
 
   progresssty3: {
@@ -533,9 +529,9 @@ const styles = StyleSheet.create({
     // backgroundColor: '#F0DE3E',
     shadowOffset: {
       height: 2,
-      width: 2,
+      width: 2
     },
-    elevation: 6,
+    elevation: 6
   },
 
   weightHeightBox: {
@@ -558,10 +554,10 @@ const styles = StyleSheet.create({
     color: '#616161',
     ShadowOffset: {
       height: 1,
-      width: 1,
+      width: 1
     },
     elevation: 4,
-    backgroundColor: colors.White,
+    backgroundColor: colors.White
   },
 
   myPlanText: {
@@ -570,9 +566,9 @@ const styles = StyleSheet.create({
     color: colors.ButtonNameColor,
     textShadowOffset: {
       height: 1,
-      width: 1,
+      width: 1
     },
-    textShadowRadius: 4,
+    textShadowRadius: 4
   },
 
   button: {
@@ -585,8 +581,8 @@ const styles = StyleSheet.create({
     color: colors.ButtonNameColor,
     ShadowOffset: {
       height: 1,
-      width: 1,
+      width: 1
     },
-    elevation: 4,
+    elevation: 4
   },
 });

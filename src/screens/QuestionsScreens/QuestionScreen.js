@@ -123,7 +123,7 @@ const QuestionScreen = () => {
 
   const handleGoBack = () => {
     if (selectedComponent !== 1) {
-      setProgress(progress >= 90 ? progress - 20 : progress - 20);
+      setProgress(progress >= 80 ? progress - 20 : progress - 20);
       setSelectedComponent(selectedComponent - 1);
     } else {
       navigation.goBack();

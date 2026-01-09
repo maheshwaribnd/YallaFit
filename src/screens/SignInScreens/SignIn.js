@@ -111,15 +111,12 @@ const SignIn = () => {
         if (res?.data?.status == 200) {
           const userIdValue = JSON.stringify(res?.data?.userId);
           AsyncStorage.setItem('userid', userIdValue);
-
-          AsyncStorage.setItem('userData', JSON.stringify(userData));
-          if (userData?.question_status == true) {
+          AsyncStorage.setItem('userData', JSON.stringify(res?.data));
+          if (res?.data?.question_status == true) {
             navigation.navigate('Dashboard');
           } else {
             navigation.navigate('LocationScreens');
           }
-
-          navigation.navigate('LocationScreens');
           signOut();
         } else {
           signOut();
@@ -223,7 +220,6 @@ const SignIn = () => {
 
     ApiManager.checkPassword(params)
       .then(async res => {
-        console.log('login response', res.data);
         if (res?.data?.success == true) {
           await AsyncStorage.setItem(
             'userid',
@@ -276,10 +272,10 @@ const SignIn = () => {
     if (page == 1) {
       if (inputValue.length > 1 && isEmailValid) {
         signInAPI('emailid');
-      } 
+      }
       // else if (inputValue.length > 1 && isValidNumber) {
       //   signInAPI('mobile_no');
-      // } 
+      // }
       else {
         Snackbar.show({
           text: 'Invalid Input , Please enter a valid email.',
@@ -293,6 +289,12 @@ const SignIn = () => {
       } else if (password.length > 0) {
         Snackbar.show({
           text: 'Invalid Input, Wrong Password',
+          backgroundColor: '#D1264A',
+          duration: Snackbar.LENGTH_SHORT,
+        });
+      } else if (password.length == 0) {
+        Snackbar.show({
+          text: 'Please Enter Password',
           backgroundColor: '#D1264A',
           duration: Snackbar.LENGTH_SHORT,
         });
